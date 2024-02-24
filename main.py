@@ -1,12 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import openai
-
-from fastapi import FastAPI, HTTPException
-import openai
 import os
-
-openai.api_key = "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"
 
 app = FastAPI()
 
@@ -16,7 +11,8 @@ class ChatRequest(BaseModel):
 
 @app.post("/chat/")
 async def chat_with_openai(request: ChatRequest):
-    #openai.api_key = "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"
+    # Retrieve the OpenAI API key from the environment variable
+    openai.api_key = os.environ.get("OPENAI_API_KEY")
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
